@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Pricing</h1>
+        <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
+    </div>
+    {% for product in products %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="card-deck mb-3 text-center">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal"><a class="article-content" href="{{ url_for('product', prod_id=product.id) }}">{{ product.prodname }}</a> </h4>
+                            </div>
+                            <div class="card-body">
+                                <h1 class="card-title pricing-card-title">{{ product.price }}</h1>
+                                <p>Posted by:{{ product.author.username }} Date Posted:{{ product.date_posted.strftime('%Y-%m-%d') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}
