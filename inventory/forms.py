@@ -63,7 +63,7 @@ class UpdateAccountForm(FlaskForm):
 class ProductForm(FlaskForm):
     prodname = StringField('Prod Name', validators=[DataRequired()])
     price = DecimalField('Srp', places=2, validators=[DataRequired()])
-    location = SelectField('Location',choices=[('Store', 'Warehouse')], validators=[DataRequired()])
+    location = SelectField('Location',choices=[('s', 'Store'),('w', 'Warehouse')], validators=[DataRequired()])
     remarks = TextAreaField('Remarks')
     submit = SubmitField('Add')
 
