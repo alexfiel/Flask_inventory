@@ -22,9 +22,15 @@ class User(db.Model, UserMixin):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    prodcode = db.Column(db.String(50), unique=True, nullable=False,)
     prodname = db.Column(db.String(50), nullable=False)
+    category = db.Column(db.String(50), nullable=False)
+    uom = db.Column(db.String(20), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    location = db.Column(db.String(50), nullable=False)
+    location = db.Column(db.String(50), nullable=True, default='product.jpg')
+    prod_image = db.Column(db.String(20), nullable=True)
+    re_order = db.Column(db.Float, nullable=False)
+    qty_onhand = db.Column(db.Float, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     remarks = db.Column(db.Text, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

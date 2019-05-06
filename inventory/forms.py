@@ -61,11 +61,19 @@ class UpdateAccountForm(FlaskForm):
 
 
 class ProductForm(FlaskForm):
+    prodcode = StringField('Prod Code', validators=[DataRequired()])
     prodname = StringField('Prod Name', validators=[DataRequired()])
     price = DecimalField('Srp', places=2, validators=[DataRequired()])
-    location = SelectField('Location',choices=[('s', 'Store'),('w', 'Warehouse')], validators=[DataRequired()])
+    category = SelectField('Category', choices=[('g', 'Grocery'), ('e', 'Electrical'), ('h', 'Hardware'),
+                                                ('r', 'Refreshment')], validators=[DataRequired()])
+    qty_onhand = FloatField('Qty on Hand', validators=[DataRequired()])
+    reorder = FloatField('Re-order', validators=[DataRequired()])
+    uom = SelectField('Units', choices=[('pc', 'piece'), ('bx', 'box'), ('k', 'Kilo')])
+    location = SelectField('Location', choices=[('s', 'Store'), ('w', 'Warehouse')], validators=[DataRequired()])
     remarks = TextAreaField('Remarks')
+    prod_image = FileField('Update Product Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Add')
+
 
 
 

@@ -98,7 +98,12 @@ def new_product():
     form = ProductForm()
     if form.validate_on_submit():
         product = Product(prodname=form.prodname.data,
+                          prodcode=form.prodcode.data,
                           price=form.price.data,
+                          category=form.category.data,
+                          qty_onhand=form.qty_onhand.data,
+                          uom=form.uom.data,
+                          re_order=form.reorder.data,
                           location=form.location.data,
                           remarks=form.remarks.data,
                           author=current_user)
@@ -126,15 +131,25 @@ def update_product(prod_id):
     form = ProductForm()
     if form.validate_on_submit():
         product.prodname = form.prodname.data
+        product.prodcode = form.prodcode.data
         product.price = form.price.data
+        product.category = form.category.data
+        product.qty_onhand = form.qty_onhand.data
+        product.re_order = form.reorder.data
+        product.uom = form.uom.data
         product.location = form.location.data
         product.remarks = form.remarks.data
         db.session.commit()
         flash('Your product has been updated!', 'success')
         return redirect(url_for('product', prod_id=prod_id))
     elif request.method == 'GET':
+        form.prodcode.data = product.prodcode
         form.prodname.data = product.prodname
         form.price.data = product.price
+        form.category.data = product.category
+        form.qty_onhand.data = product.qty_onhand
+        form.reorder.data = product.re_order
+        form.uom.data = product.uom
         form.location.data = product.location
         form.remarks.data = product.remarks
     return render_template('new_product.html', title='Update Product',
