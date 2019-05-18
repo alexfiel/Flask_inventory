@@ -12,7 +12,7 @@
                     <div class="card" style="width: 18rem;">
                             <img class="card-img-top" src="{{ image_file }}" alt="Card image cap">
                             <div class="card-header">
-                                <h4 class="my-0 font-weight-normal"><a class="article-content" href="{{ url_for('product', prod_id=product.id) }}">{{ product.prodname }}</a> </h4>
+                                <h4 class="my-0 font-weight-normal"><a class="article-content" href="{{ url_for('products.product', prod_id=product.id) }}">{{ product.prodname }}</a> </h4>
                                 <div class="card-body">
                                 <p class="card-text">Product Code:{{ product.prodcode }} Date Posted:{{ product.date_posted.strftime('%Y-%m-%d') }}</p>
                                 </div>
@@ -28,7 +28,7 @@
 
                             </div>
                             <div class="card-body">
-                                 <h5 class="my-0 font-weight-normal"><a class="article-content" href="{{ url_for('product', prod_id=product.id) }}">{{ product.prodname }}</a> </h5>
+                                 <h5 class="my-0 font-weight-normal"><a class="article-content" href="{{ url_for('products.product', prod_id=product.id) }}">{{ product.prodname }}</a> </h5>
                                 <h4 class="card-title pricing-card-title">{{ product.price }}</h4>
                                 <h6 class="card-text">Product Code:{{ product.prodcode }}</h6>
                                 <h6 class="card-text">Category:{{ product.category }}</h6>

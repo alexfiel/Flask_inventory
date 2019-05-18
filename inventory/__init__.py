@@ -13,9 +13,16 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 
+from inventory.users.routes import users
+from inventory.products.routes import products
+from inventory.main.routes import main
+
+app.register_blueprint(users)
+app.register_blueprint(products)
+app.register_blueprint(main)
 
 
-from inventory import routes
+
