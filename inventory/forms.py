@@ -91,12 +91,12 @@ class UpdateProductForm(FlaskForm):
     prodcode = StringField('Prod Code', validators=[DataRequired()])
     prodname = StringField('Prod Name', validators=[DataRequired()])
     price = DecimalField('Srp', places=2, validators=[InputRequired()])
-    category = SelectField('Category', choices=[('g', 'Grocery'), ('e', 'Electrical'), ('h', 'Hardware'),
-                                                ('r', 'Refreshment')], validators=[DataRequired()])
+    category = SelectField('Category', choices=[('Grocery', 'Grocery'), ('Electrical', 'Electrical'), ('Hardware', 'Hardware'),
+                                                ('Refreshment', 'Refreshment')], validators=[DataRequired()])
     qty_onhand = FloatField('Qty on Hand', validators=[DataRequired()])
     reorder = FloatField('Re-order', validators=[DataRequired()])
     uom = SelectField('Units', choices=[('pc', 'piece'), ('bx', 'box'), ('k', 'Kilo')])
-    location = SelectField('Location', choices=[('s', 'Store'), ('w', 'Warehouse')], validators=[DataRequired()])
+    location = SelectField('Location', choices=[('Store', 'Store'), ('Warehouse', 'Warehouse')], validators=[DataRequired()])
     remarks = TextAreaField('Remarks')
     picture = FileField('Update Product Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update')

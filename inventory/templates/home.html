@@ -24,12 +24,12 @@
 
                         <div class="card mb-4 shadow-sm">
                             <div class="card-header">
-                                <img class="card-img-top" src="{{ products.prod_image }}" alt="Card image cap">
+                                <img class="card-img-top" src="/static/data_pics/{{ product.prod_image }}" alt="Card image cap">
 
                             </div>
                             <div class="card-body">
                                  <h5 class="my-0 font-weight-normal"><a class="article-content" href="{{ url_for('product', prod_id=product.id) }}">{{ product.prodname }}</a> </h5>
-                                <h6 class="card-title pricing-card-title">{{ product.price }}</h6>
+                                <h4 class="card-title pricing-card-title">{{ product.price }}</h4>
                                 <h6 class="card-text">Product Code:{{ product.prodcode }}</h6>
                                 <h6 class="card-text">Category:{{ product.category }}</h6>
                                 <h6 class="card-text"> Date Posted:{{ product.date_posted.strftime('%Y-%m-%d') }}</h6>
