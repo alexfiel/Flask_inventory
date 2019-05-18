@@ -2,7 +2,7 @@ import os
 import secrets
 from PIL import Image
 from flask import Flask, render_template, url_for, flash, redirect, request, abort
-from inventory.forms import RegistrationForm, LoginForm, UpdateAccountForm, ProductForm
+from inventory.forms import RegistrationForm, LoginForm, UpdateAccountForm, ProductForm, UpdateProductForm
 from inventory import app, db, bcrypt
 from inventory.models import User, Product
 from flask_login import login_user, current_user, logout_user, login_required
@@ -61,7 +61,7 @@ def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+    picture_path = os.path.join(app.root_path, 'static/data_pics', picture_fn)
 
     output_size = (125, 125)
     i = Image.open(form_picture)
@@ -87,7 +87,7 @@ def account():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    image_file = url_for('static', filename='data_pics/' + current_user.image_file)
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
@@ -128,8 +128,11 @@ def update_product(prod_id):
     product = Product.query.get_or_404(prod_id)
     if product.author != current_user:
         abort(403)
-    form = ProductForm()
+    form = UpdateProductForm()
     if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            product.prod_image = picture_file
         product.prodname = form.prodname.data
         product.prodcode = form.prodcode.data
         product.price = form.price.data
@@ -152,8 +155,9 @@ def update_product(prod_id):
         form.uom.data = product.uom
         form.location.data = product.location
         form.remarks.data = product.remarks
-    return render_template('new_product.html', title='Update Product',
-                           form=form, legend='Update Product')
+    prod_image = url_for('static', filename='data_pics/' + product.prod_image)
+    return render_template('update_product.html', title='Update Product',
+                           image_file=prod_image, form=form, legend='Update Product')
 
 
 @app.route('/product/<int:prod_id>/delete', methods=['POST'])
@@ -166,4 +170,17 @@ def delete_product(prod_id):
     db.session.commit()
     flash('Product has been deleted', 'success')
     return redirect(url_for('home'))
+
+
+@app.route('/upload', methods=['POST', 'GET'])
+@login_required
+def upload():
+    if request.method == "POST":
+        if request.files:
+            image = request.files["image"]
+            print(image)
+            return redirect(request.url)
+    return render_template('upload.html', title='Upload')
+
+
 
