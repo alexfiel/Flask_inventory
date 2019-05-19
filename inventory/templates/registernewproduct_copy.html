@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% from "_formhelpers.html" import render_field %}
+{% block content %}
+    <div>
+        <div class="bg-steel">
+            <h2>Add new Product</h2>
+        </div>
+        <form action="{{ url_for('products.add_product') }}" method="post" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <dl>
+                {{ render_field(form.prdcode, placeholder="Enter Product code") }}
+                {{ render_field(form.prodname, placeholder="Enter Product name") }}
+                {{ render_field(form.price, placeholder="Enter Suggested Retail Price") }}
+                {{ render_field(form.category, placeholder="Choose Category") }}
+                {{ render_field(form.qty_onhand, placeholder="Enter qty") }}
+                {{ render_field(form.reorder, placeholder="Enter re-order level") }}
+                {{ render_field(form.uom, placeholder="Choose UOM") }}
+                {{ render_field(form.location, placeholder="Choose Location") }}
+                {{ render_field(form.remarks, placeholder="Remarks") }}
+                {{ render_field(form.picture) }}
+            </dl>
+                <button class="btn btn-sm btn-success" type="submit">Add Product</button>
+
+        </form>
+    </div>
+
+{% endblock content %}

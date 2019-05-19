@@ -1,11 +1,41 @@
+import os
 from flask import Blueprint, render_template, flash, url_for, request, abort, redirect
-from inventory import db
+from inventory import db, app, allowed_file, images
 from inventory.models import Product
 from inventory.products.forms import ProductForm, UpdateProductForm
 from flask_login import current_user, login_required
+from inventory.products.utils import save_prod_img
+from werkzeug.utils import secure_filename
 
 
 products = Blueprint('products', __name__)
+
+
+@products.route('/product/register', methods=['GET', 'POST'])
+@login_required
+def add_product():
+    form = ProductForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            filename = images.save(request.files['picture'])
+            newproduct = Product(prodname=form.prodname.data,
+                          prodcode=form.prodcode.data,
+                          price=form.price.data,
+                          category=form.category.data,
+                          qty_onhand=form.qty_onhand.data,
+                          uom=form.uom.data,
+                          re_order=form.reorder.data,
+                          location=form.location.data,
+                          remarks=form.remarks.data,
+                          picture =filename,
+                          author=current_user)
+            db.session.add(newproduct)
+            db.session.commit()
+            flash('New Product, {}, added!'.format(newproduct.prodname), 'success')
+            return redirect(url_for('main.home'))
+        else:
+            flash('ERROR! Product not added.', 'error')
+    return render_template('registernewproduct.html', form=form)
 
 
 @products.route('/product/new', methods=['GET', 'POST'])
@@ -47,7 +77,7 @@ def update_product(prod_id):
     form = UpdateProductForm()
     if form.validate_on_submit():
         if form.picture.data:
-            picture_file = save_picture(form.picture.data)
+            picture_file = save_prod_img(form.picture.data)
             product.prod_image = picture_file
         product.prodname = form.prodname.data
         product.prodcode = form.prodcode.data
@@ -85,4 +115,25 @@ def delete_product(prod_id):
     db.session.delete(product)
     db.session.commit()
     flash('Product has been deleted', 'success')
-    return redirect(url_for('home'))
+    return redirect(url_for('main.home'))
+
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('main.home',
+                                    filename=filename))
+    return render_template('upload.html')

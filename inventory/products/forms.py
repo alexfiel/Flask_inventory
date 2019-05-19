@@ -1,8 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, FloatField, SelectField, DecimalField
 from wtforms.validators import DataRequired, ValidationError, InputRequired
-from flask_wtf.file import FileField, FileAllowed
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from inventory.models import Product
+from inventory import images
+
 
 class ProductForm(FlaskForm):
     prodcode = StringField('Prod Code', validators=[DataRequired()])
@@ -15,7 +17,7 @@ class ProductForm(FlaskForm):
     uom = SelectField('Units', choices=[('pc', 'piece'), ('bx', 'box'), ('k', 'Kilo')])
     location = SelectField('Location', choices=[('Store', 'Store'), ('Warehouse', 'Warehouse')], validators=[DataRequired()])
     remarks = TextAreaField('Remarks')
-    picture = FileField('Update Product Picture', validators=[FileAllowed(['jpg', 'png'])])
+    picture = FileField('Product Image', validators=[FileRequired(), FileAllowed(images, 'Images only')])
     submit = SubmitField('Add')
 
     def validate_prodcode(self, prodcode):

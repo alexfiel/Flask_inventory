@@ -36,4 +36,4 @@ class Product(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Products('{self.prodname}', '{self.date_posted}')"
+        return f"Products('{self.prodname}', '{self.date_posted}'), '{self.prod_image}'"

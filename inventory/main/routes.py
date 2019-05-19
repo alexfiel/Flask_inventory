@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request
 from inventory.models import Product
 from flask_login import login_required
+from inventory import app
 
 main = Blueprint('main', __name__)
 
@@ -17,12 +18,4 @@ def about():
     return render_template('about.html', title='About')
 
 
-@main.route('/upload', methods=['POST', 'GET'])
-@login_required
-def upload():
-    if request.method == "POST":
-        if request.files:
-            image = request.files["image"]
-            print(image)
-            return redirect(request.url)
-    return render_template('upload.html', title='Upload')
+
