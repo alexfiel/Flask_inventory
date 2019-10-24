@@ -1,14 +1,13 @@
-{% extends "layout.html" %}
-{% block content %}
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Pricing</h1>
-        <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
-    </div>
-    {% for product in products %}
-        <div class="container">
-            <div class="col-sm-6">
-                <div class="row">
-                    <!--
+{% extends "layout.html" %} {% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Pricing</h1>
+    <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
+</div>
+{% for product in products %}
+<div class="container">
+    <div class="col-sm-6">
+        <div class="row">
+            <!--
                     <div class="card" style="width: 18rem;">
                             <img class="card-img-top" src="{{ image_file }}" alt="Card image cap">
                             <div class="card-header">
@@ -20,24 +19,23 @@
 
                     </div>
                     -->
-                    <div class="card-deck mb-3 text-center" style="max-width: 18rem;">
+            <div class="card-deck mb-3 text-center" style="max-width: 18rem;">
 
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-header">
-                                <img class="card-img-top" src="/static/data_pics/{{ product.prod_image }}" alt="Card image cap">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <img class="card-img-top" src="{{ prod_image }}">
 
-                            </div>
-                            <div class="card-body">
-                                 <h5 class="my-0 font-weight-normal"><a class="article-content" href="{{ url_for('products.product', prod_id=product.id) }}">{{ product.prodname }}</a> </h5>
-                                <h4 class="card-title pricing-card-title">{{ product.price }}</h4>
-                                <h6 class="card-text">Product Code:{{ product.prodcode }}</h6>
-                                <h6 class="card-text">Category:{{ product.category }}</h6>
-                                <h6 class="card-text"> Date Posted:{{ product.date_posted.strftime('%Y-%m-%d') }}</h6>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="my-0 font-weight-normal"><a class="article-content" href="{{ url_for('products.product', prod_id=product.id) }}">{{ product.prodname }}</a> </h5>
+                        <h4 class="card-title pricing-card-title">{{ product.price }}</h4>
+                        <h6 class="card-text">Product Code:{{ product.prodcode }}</h6>
+                        <h6 class="card-text">Category:{{ product.category }}</h6>
+                        <h6 class="card-text"> Date Posted:{{ product.date_posted.strftime('%Y-%m-%d') }}</h6>
                     </div>
                 </div>
             </div>
         </div>
-    {% endfor %}
-{% endblock content %}
+    </div>
+</div>
+{% endfor %} {% endblock content %}

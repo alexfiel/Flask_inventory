@@ -1,4 +1,5 @@
 import os
+import sys
 from flask import Blueprint, render_template, flash, url_for, request, abort, redirect
 from inventory import db, app, allowed_file, images
 from inventory.models import Product
@@ -17,7 +18,8 @@ def add_product():
     form = ProductForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            filename = images.save(request.files['picture'])
+            #filename = images.save(request.files['picture'])
+            filename = "default.jpg"
             newproduct = Product(prodname=form.prodname.data,
                           prodcode=form.prodcode.data,
                           price=form.price.data,
@@ -103,7 +105,7 @@ def update_product(prod_id):
         form.remarks.data = product.remarks
     prod_image = url_for('static', filename='data_pics/' + product.prod_image)
     return render_template('update_product.html', title='Update Product',
-                           image_file=prod_image, form=form, legend='Update Product')
+                           prod_image=prod_image, form=form, legend='Update Product')
 
 
 @products.route('/product/<int:prod_id>/delete', methods=['POST'])

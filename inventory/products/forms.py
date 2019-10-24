@@ -17,7 +17,7 @@ class ProductForm(FlaskForm):
     uom = SelectField('Units', choices=[('pc', 'piece'), ('bx', 'box'), ('k', 'Kilo')])
     location = SelectField('Location', choices=[('Store', 'Store'), ('Warehouse', 'Warehouse')], validators=[DataRequired()])
     remarks = TextAreaField('Remarks')
-    picture = FileField('Product Image', validators=[FileRequired(), FileAllowed(images, 'Images only')])
+    picture = FileField('Product Image', validators=[FileAllowed(images, 'Images only')])
     submit = SubmitField('Add')
 
     def validate_prodcode(self, prodcode):
