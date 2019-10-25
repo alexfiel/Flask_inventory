@@ -23,7 +23,7 @@
 
                 <div class="card mb-4 shadow-sm">
                     <div class="card-header">
-                        <img class="card-img-top" src="{{ prod_image }}">
+                        <img class="card-img-top" src="{{url_for('static', filename='data_pics/product_img/' + product.prod_image)}}">
 
                     </div>
                     <div class="card-body">
@@ -31,6 +31,7 @@
                         <h4 class="card-title pricing-card-title">{{ product.price }}</h4>
                         <h6 class="card-text">Product Code:{{ product.prodcode }}</h6>
                         <h6 class="card-text">Category:{{ product.category }}</h6>
+                        <h6 class="card-text">filename:{{ product.prod_image }}</h6>
                         <h6 class="card-text"> Date Posted:{{ product.date_posted.strftime('%Y-%m-%d') }}</h6>
                     </div>
                 </div>

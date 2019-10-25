@@ -67,7 +67,7 @@ def new_product():
 @products.route('/product/<int:prod_id>')
 def product(prod_id):
     product = Product.query.get_or_404(prod_id)
-    return render_template('product.html', title=product.prodname, product=product)
+    return render_template('product.html', title=product.prodname, product=product, prod_image = product.prod_image)
 
 
 @products.route('/product/<int:prod_id>/update', methods=['GET', 'POST'])
