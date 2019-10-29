@@ -1,47 +1,50 @@
 {% extends "layout.html" %} {% block content %}
 <div class="content-section">
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">{{ legend }}</legend>
+
             <div class="form-group">
-                {{ form.projectname.label(class="form-control-label") }} {% if form.projectname.errors %} {{ form.projectname(readonly=true, class="form-control form-control-lg")}}
+                {{ form.projectname.label(class="form-control-label") }} {% if form.projectname.errors %} {{ form.projectname(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
                     {% for error in form.projectname.errors %}
                     <span>{{ error }}</span> {% endfor %}
                 </div>
-                {% else %} {{ form.projectname(readonly=true, class="form-control form-control-lg") }} {% endif %}
+                {% else %} {{ form.projectname(class="form-control form-control-lg") }} {% endif %}
             </div>
             <div class="form-group">
-                {{ form.projectcode.label(class="form-control-label") }} {% if form.projectcode.errors %} {{ form.projectcode(readonly=true, class="form-control form-control-lg")}}
+                {{ form.projectcode.label(class="form-control-label") }} {% if form.projectcode.errors %} {{ form.projectcode(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
                     {% for error in form.projectcode.errors %}
                     <span>{{ error }}</span> {% endfor %}
                 </div>
-                {% else %} {{ form.projectcode(readonly=true, class="form-control form-control-lg") }} {% endif %}
+                {% else %} {{ form.projectcode(class="form-control form-control-lg") }} {% endif %}
             </div>
-            <div class="form-group">
-                {{ form.description.label(class="form-control-label") }} {% if form.description.errors %} {{ form.description(readonly=true, class="form-control form-control-lg")}}
+
+            <div crlass="form-group">
+                {{ form.description.label(class="form-control-label") }} {% if form.description.errors %} {{ form.description(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
                     {% for error in form.description.errors %}
                     <span>{{ error }}</span> {% endfor %}
                 </div>
-                {% else %} {{ form.description(readonly=true, class="form-control form-control-lg") }} {% endif %}
+                {% else %} {{ form.description(class="form-control form-control-lg") }} {% endif %}
             </div>
             <div class="form-group">
-                {{ form.projectlocation.label(class="form-control-label") }} {% if form.projectlocation.errors %} {{ form.projectlocation(readonly=true, class="form-control form-control-lg")}}
+                {{ form.projectlocation.label(class="form-control-label") }} {% if form.projectlocation.errors %} {{ form.projectlocation(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
                     {% for error in form.projectlocation.errors %}
                     <span>{{ error }}</span> {% endfor %}
                 </div>
-                {% else %} {{ form.projectlocation(readonly=true, class="form-control form-control-lg") }} {% endif %}
+                {% else %} {{ form.projectlocation(class="form-control form-control-lg") }} {% endif %}
             </div>
+            <!-- for picture
             <div class="form-group">
-                {{form.project_image.label() }} {form.project_image(class="form-control-file")} {% if form.project_image.error %} {% for error in form.project_image.errors %}
-                <span class="text-danger">{{ error }}</span>
-                <br> {% endfor %} {% endif %}
+                {{ form.project_image.label() }} {{ form.project_image(class="form-control-file") }} {% if form.project_image.errors %} {% for error in form.project_image.errors %}
+                <span class="text-danger">{{ error }}</span></br>
+                {% endfor %} {% endif %}
             </div>
-
+        -->
         </fieldset>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}

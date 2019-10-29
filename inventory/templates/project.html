@@ -1,7 +1,43 @@
 {% extends "layout.html" %} {% block content %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Projects List</h1>
-    <p class="lead">List of all projects</p>
+    <p class="lead">List of all </p>
 </div>
 <h1>This is a project page</h1>
-{% endblock content %}
+{% for project in projects %}
+<div class="container">
+    <div class="col-sm-3">
+        <div class="row">
+            <!--
+                    <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ image_file }}" alt="Card image cap">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal"><a class="article-content" href="{{ url_for('products.product', prod_id=product.id) }}">{{ product.prodname }}</a> </h4>
+                                <div class="card-body">
+                                <p class="card-text">Product Code:{{ product.prodcode }} Date Posted:{{ product.date_posted.strftime('%Y-%m-%d') }}</p>
+                                </div>
+                            </div>
+
+                    </div>
+                    -->
+            <div class="card-deck mb-4 text-center" style="max-width: 18rem;">
+
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header">
+                        <img class="rounded-circle account-img" " src="{{url_for( 'static', filename='data_pics/product_img/' + product.prod_image)}} ">
+
+                    </div>
+                    <div class="card-body ">
+                        <h5 class="my-0 font-weight-normal "><a class="article-content " href="{{ url_for( 'products.product', prod_id=product.id) }} ">{{ product.prodname }}</a> </h5>
+                        <h4 class="card-title pricing-card-title ">{{ product.price }}</h4>
+                        <h6 class="card-text ">Product Code:{{ product.prodcode }}</h6>
+                        <h6 class="card-text ">Category:{{ product.category }}</h6>
+                        <h6 class="card-text ">filename:{{ product.prod_image }}</h6>
+                        <h6 class="card-text "> Date Posted:{{ product.date_posted.strftime('%Y-%m-%d') }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %} {% endblock content %}
