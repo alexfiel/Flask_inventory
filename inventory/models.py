@@ -3,6 +3,13 @@ from inventory import db, login_manager
 from flask_login import UserMixin
 
 
+# if during the migrate says table not updated run the following command below.
+# python manage.py db stamp head / flask db stamp head
+# python manage.py db migrate / flask db migrate
+# python manage.py db upgrade / flask db upgrade
+
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -15,6 +22,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     products = db.relationship('Product', backref='author', lazy=True)
+    projects = db.relationship('Project', backref='Project', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
@@ -22,7 +30,7 @@ class User(db.Model, UserMixin):
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    prodcode = db.Column(db.String(50), unique=True, nullable=False,)
+    prodcode = db.Column(db.String(50), unique=True, nullable=False)
     prodname = db.Column(db.String(50), unique=True, nullable=False)
     category = db.Column(db.String(50), nullable=False)
     uom = db.Column(db.String(20), nullable=False)
@@ -37,3 +45,16 @@ class Product(db.Model):
 
     def __repr__(self):
         return f"Products('{self.prodname}', '{self.date_posted}'), '{self.prod_image}'"
+
+class Project(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    projectcode = db.Column(db.String(50), unique=True, nullable=False)
+    projectname = db.Column(db.String(50), unique=True, nullable=False)
+    description = db.Column(db.String(200), nullable=True)
+    projectlocation = db.Column(db.String(100), nullable=False)
+    project_image = db.Column(db.String(20), nullable=False, default='default_product.png')
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Projects('{self.projectname}','{self.projectcode}')"

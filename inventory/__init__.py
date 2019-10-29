@@ -37,14 +37,16 @@ def allowed_file(filename):
             filename.rsplit('.', 1)[1].lower()in ALLOWED_EXTENSIONS
 
 
-
+# register the blueprint 
 from inventory.users.routes import users
 from inventory.products.routes import products
 from inventory.main.routes import main
+from inventory.projects.routes import projects
 
 app.register_blueprint(users)
 app.register_blueprint(products)
 app.register_blueprint(main)
+app.register_blueprint(projects)
 
 
 
