@@ -32,7 +32,7 @@ def registerProject():
 @projects.route('/project')
 def project():
     projects = Project.query.all()
-    return render_template('project.html', title='Project')
+    return render_template('project.html', title='Project', projects=projects)
 
        
 
