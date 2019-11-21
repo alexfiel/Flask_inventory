@@ -1,4 +1,12 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
+<h2>PRODUCT SEARCH</h2>
+<form method="POST">
+    <p>
+        {{form.search}}
+    </p>
+    <p>
+        <p><input type=submit value=Search>
+        </p>
+</form>
 
 {% endblock content %}

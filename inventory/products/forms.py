@@ -49,3 +49,6 @@ class UpdateProductForm(FlaskForm):
     #def __init__(self, *args, **kwargs):
     #    super(UpdateProductForm, self).__init__(*args, **kwargs)
     #    read_only(self.prodcode, self.prodname)
+
+class SearchProductForm(FlaskForm):
+    search = StringField('')

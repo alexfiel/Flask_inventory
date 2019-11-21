@@ -3,7 +3,7 @@ import sys
 from flask import Blueprint, render_template, flash, url_for, request, abort, redirect
 from inventory import db, app, allowed_file, images
 from inventory.models import Product
-from inventory.products.forms import ProductForm, UpdateProductForm
+from inventory.products.forms import ProductForm, UpdateProductForm, SearchProductForm
 from flask_login import current_user, login_required
 from inventory.products.utils import save_prod_img
 from werkzeug.utils import secure_filename
@@ -69,6 +69,30 @@ def product(prod_id):
     product = Product.query.get_or_404(prod_id)
     return render_template('product.html', title=product.prodname, product=product, prod_image = product.prod_image)
 
+
+@products.route('/product/result', methods=['GET','POST'])
+def searchproduct():
+    search = SearchProductForm(request.form)
+    if request.method == 'POST':
+        return search_results(search)
+    
+    return render_template('show.html', form=search)
+
+@products.route('/product/result')
+def search_results(search):
+    results = []
+    search_string = search.data['search']
+
+    if search.data['search'] == '':
+        qry = db.session.query(Product)
+        results = qry.all()
+    
+    if not results:
+        flash('No results Found!')
+        return redirect('/product/result')
+    
+    else:
+        return render_template('productResult.html', results=results)    
 
 @products.route('/product/<int:prod_id>/update', methods=['GET', 'POST'])
 @login_required

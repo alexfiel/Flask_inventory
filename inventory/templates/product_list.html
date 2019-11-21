@@ -1,0 +1,11 @@
+{% extends "layout.html" %} {% block content %}
+<h3> Product List </h3>
+<ul>
+    {% for course in courses %}
+    <li>
+        <h4><a href="{{ url_for( 'products.product', prod_id=product.id) }} ">{{ product.prodname }}</a>></a>
+
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}}

@@ -1,7 +1,10 @@
 from datetime import datetime
 from inventory import db, login_manager
 from flask_login import UserMixin
+import flask_whooshalchemy
+from whoosh.analysis import StemmingAnalyzer
 
+ 
 
 # if during the migrate says table not updated run the following command below.
 # python manage.py db stamp head / flask db stamp head
@@ -29,6 +32,10 @@ class User(db.Model, UserMixin):
 
 
 class Product(db.Model):
+    __tablename__ = 'product'
+    __searchable__ =['prodname','prodcode']
+    __analyzer__ = StemmingAnalyzer()
+
     id = db.Column(db.Integer, primary_key=True)
     prodcode = db.Column(db.String(50), unique=True, nullable=False)
     prodname = db.Column(db.String(50), unique=True, nullable=False)
@@ -45,6 +52,8 @@ class Product(db.Model):
 
     def __repr__(self):
         return f"Products('{self.prodname}', '{self.date_posted}'), '{self.prod_image}'"
+
+
 
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)

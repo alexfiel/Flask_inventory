@@ -14,9 +14,12 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'f62518f03b560013049fe43c83133a1c'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:cto154@localhost:3306/inventory'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
+app.config['WHOOSH_BASE'] = '/tmp/whoosh'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config.from_pyfile('sys.cfg')
+
 
 
 db = SQLAlchemy(app)
@@ -25,6 +28,8 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
+
+
 
 
 # Configure the image uploading via FLask-Uploads
