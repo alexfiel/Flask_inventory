@@ -72,12 +72,11 @@ def product(prod_id):
 
 @products.route('/product/result', methods=['GET','POST'])
 def searchproduct():
-    search = SearchProductForm(request.form)
-    if request.method == 'POST':
-        return search_results(search)
+    #search = SearchProductForm(request.form)
+    products = Product.query.all()
+    return render_template('show.html', products=products)
     
-    return render_template('show.html', form=search)
-
+    
 @products.route('/product/result')
 def search_results(search):
     results = []
