@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired, ValidationError, InputRequired
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from inventory.models import Product
 from inventory import images
+from wtforms_sqlalchemy.fields import QuerySelectField
 
 
 class ProductForm(FlaskForm):
@@ -50,5 +51,9 @@ class UpdateProductForm(FlaskForm):
     #    super(UpdateProductForm, self).__init__(*args, **kwargs)
     #    read_only(self.prodcode, self.prodname)
 
-class SearchProductForm(FlaskForm):
-    search = StringField('')
+def search_query():
+    return Product.query
+
+class SearchForm(FlaskForm):
+    search = StringField('SearchField')
+    submit = SubmitField('Search')

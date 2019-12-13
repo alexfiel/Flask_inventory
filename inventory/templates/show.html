@@ -1,5 +1,18 @@
 {% extends "layout.html" %} {% block content %}
 <h2>PRODUCT LIST</h2>
+{% from "_formhelpers.html" import render_field %}
+<form method="POST" action="">
+
+    <fieldset class="form-group">
+        <div class="form-group">
+            {{ render_field(form.search) }}
+        </div>
+        <div class="form-group">
+            {{ render_field(form.submit) }}
+        </div>
+    </fieldset>
+
+</form>
 
 <table border="1" width=100%>
     <tr>

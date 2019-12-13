@@ -1,6 +1,21 @@
 {% extends "layout.html" %} {% block content %}
 <h2>PRODUCT RESULT</h2>
-
+<table border="1" width=100%>
+    <tr>
+        <th>Product Code</th>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Category</th>
+    </tr>
+    {% for product in products %}
+    <tr>
+        <td width=20%>{{ product.prodcode }}</td>
+        <td width=40%>{{ product.prodname }}</td>
+        <td width=10%>{{ product.price }}</td>
+        <td width=30%>{{ product.category }}</td>
+    </tr>
+    {% endfor %}
+</table>
 
 
 {% endblock content %}

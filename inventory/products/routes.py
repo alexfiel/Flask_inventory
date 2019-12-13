@@ -3,10 +3,11 @@ import sys
 from flask import Blueprint, render_template, flash, url_for, request, abort, redirect
 from inventory import db, app, allowed_file, images
 from inventory.models import Product
-from inventory.products.forms import ProductForm, UpdateProductForm, SearchProductForm
+from inventory.products.forms import ProductForm, UpdateProductForm, SearchForm
 from flask_login import current_user, login_required
 from inventory.products.utils import save_prod_img
 from werkzeug.utils import secure_filename
+
 
 
 products = Blueprint('products', __name__)
@@ -72,27 +73,50 @@ def product(prod_id):
 
 @products.route('/product/result', methods=['GET','POST'])
 def searchproduct():
-    #search = SearchProductForm(request.form)
-    products = Product.query.all()
-    return render_template('show.html', products=products)
+    search = SearchForm()
+    if request.method == 'POST':
+        return search_results(search)
+    else:
+        products = Product.query.all()   
+        return render_template('show.html', form=search, products=products)
     
-    
-@products.route('/product/result')
+
+@products.route('/product/result/res', methods=['GET','POST'])
 def search_results(search):
-    results = []
+    #search = SearchForm()
+    products=[]
     search_string = search.data['search']
 
     if search.data['search'] == '':
-        qry = db.session.query(Product)
-        results = qry.all()
-    
-    if not results:
-        flash('No results Found!')
-        return redirect('/product/result')
-    
+        products = Product.query.all()
+        #return 'this is empty string'
+        #return render_template('show.html',form=search, products=products)
+        return render_template('productResult.html', products=products)
     else:
-        return render_template('productResult.html', results=results)    
+        products = Product.query.filter_by(prodname=search_string).all()
+        if not products:
+            flash('No result Found')
+            return redirect('/product/result')
+        else:
+        #return 'xxx'
+            return render_template('productResult.html', products=products)
 
+    #if not products:
+    #    flash('No Result found!')
+    #    return redirect(url_for('main.home'))
+    #else:
+    #    products = Product.query.filter_by(prodname=search).first_or_404()
+    #    return 'fire'
+        #return render_template('show.html', products=products)
+
+
+    #if not results:
+     #   flash('No result found!')
+     #  return redirect(url_for('main.home'))
+    #else:
+     #   return render_template('show.html', results=results)
+
+        
 @products.route('/product/<int:prod_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_product(prod_id):
